@@ -6,6 +6,7 @@ A web application designed to streamline blood bank management, including donor 
 ## Features
 
 - **Donor Management**: Register and manage donor details.
+- Hospital management**
 - **Inventory Tracking**: Keep track of available blood units by type.
 - **Request Handling**: Manage blood requests efficiently.
 - **User Authentication**: Secure login for users and administrators.
