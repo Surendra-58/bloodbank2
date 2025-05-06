@@ -1350,7 +1350,7 @@ class HospitalDeliverySummaryView(LoginRequiredMixin, ListView):
 
 
 class HospitalDeliveryDetailView(LoginRequiredMixin, ListView):
-    def get(self, request, hospital_id):
+    def get(self, request, hospital_email):
         # Filter directly by hospital ID in the FK, even if hospital is deleted
         deliveries = HospitalBloodRequest.objects.filter(
             hospital_email_snapshot=hospital_email,
