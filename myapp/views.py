@@ -1338,13 +1338,26 @@ class HospitalDeliverySummaryView(LoginRequiredMixin, ListView):
         })
 
 # Detail History for One Hospital
-class HospitalDeliveryDetailView(LoginRequiredMixin, ListView):
+#class HospitalDeliveryDetailView(LoginRequiredMixin, ListView):
+#    def get(self, request, hospital_id):
+#        hospital = get_object_or_404(CustomUser, id=hospital_id, user_type="2")
+#        deliveries = HospitalBloodRequest.objects.filter(hospital=hospital, status='delivered').order_by('-accepted_at')
+
+#        return render(request, 'admin/hospital_delivery_detail.html', {
+#            'hospital': hospital,
+#            'deliveries': deliveries
+#        })
+
+
+class HospitalDeliveryDetailView(LoginRequiredMixin, View):
     def get(self, request, hospital_id):
-        hospital = get_object_or_404(CustomUser, id=hospital_id, user_type="2")
-        deliveries = HospitalBloodRequest.objects.filter(hospital=hospital, status='delivered').order_by('-accepted_at')
+        # Filter directly by hospital ID in the FK, even if hospital is deleted
+        deliveries = HospitalBloodRequest.objects.filter(
+            hospital_id=hospital_id,
+            status='delivered'
+        ).order_by('-delivered_at')
 
         return render(request, 'admin/hospital_delivery_detail.html', {
-            'hospital': hospital,
             'deliveries': deliveries
         })
 
