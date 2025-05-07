@@ -1,2 +1,2 @@
 # bloodbank2
-ok
+Create a real time blood bank management system with the help of django framework. 
