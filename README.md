@@ -34,7 +34,7 @@ A full-featured web application built with **Django** that connects **donors**, 
 
 ## 🖼️ Screenshots
 
-> Add screenshots here (e.g. home page, donor profile, hospital dashboard)
+>    
 
 ## 🧑‍💻 Tech Stack
 
