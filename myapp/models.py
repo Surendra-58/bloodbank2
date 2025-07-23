@@ -53,6 +53,9 @@ class CustomUser(AbstractUser):
     first_name = models.CharField(max_length=15,null=True,blank=True,default='N/A')
     last_name = models.CharField(max_length=15,null=True,blank=True,default='N/A')
     
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+
     
     username = None  # Removed username, using email instead
     email = models.EmailField(unique=True)

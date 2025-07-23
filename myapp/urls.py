@@ -106,5 +106,7 @@ urlpatterns = [
     path('dashboard/top-donors/', views.top_donors_chart_data, name='top_donors_chart_data'),
     path('dashboard/age-gender-distribution/', views.age_gender_distribution_chart_data, name='age_gender_distribution_chart_data'),
     path('dashboard/donor-blood-group/', views.donor_blood_group_chart_data, name='donor_blood_group_chart_data'),
+
+    path("save-location/", views.save_location, name="save_location"),
  ]
 

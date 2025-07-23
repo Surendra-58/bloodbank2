@@ -8,4 +8,34 @@
     <a href="{% url 'blog:create_post' %}" class="btn btn-primary">Create New Post</a>
 
     {% include 'blog/feed.html' %}
+
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+window.onload = function() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            fetch("{% url 'save_location' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                })
+            }).then(response => response.json())
+              .then(data => console.log("Location sent:", data));
+        }, function(error) {
+            console.error("Error getting location", error);
+        });
+    } else {
+        console.error("Geolocation not supported by this browser.");
+    }
+}
+</script>
+
 {% endblock %}

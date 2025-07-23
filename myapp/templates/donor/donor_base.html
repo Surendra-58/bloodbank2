@@ -66,8 +66,10 @@
         .navbar-toggler {
             background-color: #fff;
             border-radius: 6px;
+
         }
     </style>
+
     <!-- Default or shared styles can go here -->
     {% endblock %}
 </head>
@@ -298,9 +300,9 @@
             document.getElementById('modalImage').src = imageUrl;
         }
 
-        {% block scripts %}{% endblock %}
-
     </script>
+
+    {% block scripts %}<!-- Scripts for other template -->{% endblock %}
 
 
 

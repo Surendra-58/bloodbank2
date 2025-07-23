@@ -166,6 +166,11 @@ def admin_dashboard(request):
     # Get all blood inventory for the admin
     blood_inventory = BloodInventory.objects.filter(admin=admin)
 
+    users = CustomUser.objects.exclude(latitude=None).exclude(longitude=None)
+    # Example: get admin coordinates if saved (optional)
+    admin_lat = request.user.latitude
+    admin_lng = request.user.longitude
+
     # Find blood groups with less than 5 units
     low_blood_inventory = blood_inventory.filter(available_units__lt=5)
     low_blood_groups = [item.blood_group for item in low_blood_inventory]
@@ -186,6 +191,9 @@ def admin_dashboard(request):
         "blood_processing_count": blood_processing_count,
         "hospital_pending_count": hospital_pending_count,
         "hospital_processing_count": hospital_processing_count,
+        'users': users,
+        'admin_lat': admin_lat,
+        'admin_lng': admin_lng,
     }
 
     return render(request, "admin/admin_dashboard.html", context)
@@ -1710,6 +1718,47 @@ def donor_blood_group_chart_data(request):
     }
 
     return JsonResponse(response)
+
+
+# views.py for location
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+import json
+
+@csrf_exempt
+@login_required
+def save_location(request):
+    if request.method == "POST" and request.user.user_type in ["1", "2", "3"]:
+
+        data = json.loads(request.body)
+        lat = data.get("latitude")
+        lon = data.get("longitude")
+        if lat and lon:
+            request.user.latitude = lat
+            request.user.longitude = lon
+            request.user.save()
+            return JsonResponse({"status": "success"})
+    return JsonResponse({"status": "fail"})
+
+
+# from django.contrib.auth.decorators import login_required, user_passes_test
+# from django.shortcuts import render
+# from .models import CustomUser
+
+# @login_required
+# @user_passes_test(lambda u: u.user_type == "1")
+# def admin_dashboard(request):
+#     admin = request.user
+#     users_with_location = CustomUser.objects.exclude(latitude=None).exclude(longitude=None)
+
+#     context = {
+#         "admin_lat": admin.latitude,
+#         "admin_lon": admin.longitude,
+#         "users": users_with_location
+#     }
+#     return render(request, "admin_dashboard.html", context)
+
+
 
 
 

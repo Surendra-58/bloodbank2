@@ -186,7 +186,12 @@
         </div>
     </div>
 </div>
-
+</br>
+<h2>All User Locations</h2>
+<!-- Map Container -->
+<div id="map" style="height: 500px;"></div>
+<h2>Map</h2>
+</br>
 
 {% endblock %}
 
@@ -443,6 +448,64 @@ fetch('/dashboard/donor-blood-group/')
     });
 
 
+</script>
+
+<!-- Colored Marker Icons -->
+<script>
+    const adminLat = {{ admin_lat|default:27.7172 }};
+    const adminLng = {{ admin_lng|default:85.3240 }};
+
+    const map = L.map('map').setView([adminLat, adminLng], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Define custom icons
+    const redIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+        shadowUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png',
+        iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
+    });
+
+    const blueIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+        shadowUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png',
+        iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
+    });
+
+    const greenIcon = new L.Icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+        shadowUrl: 'https://unpkg.com/leaflet@1.9.3/dist/images/marker-shadow.png',
+        iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41]
+    });
+
+    // Marker cluster group
+    const markers = L.markerClusterGroup();
+
+    const users = [
+        {% for user in users %}
+        {
+            name: "{{ user.first_name }} {{ user.last_name }} ({{ user.get_user_type_display }})",
+            lat: {{ user.latitude }},
+            lng: {{ user.longitude }},
+            user_type: "{{ user.user_type }}"
+        },
+        {% endfor %}
+    ];
+
+    users.forEach(user => {
+        let icon = blueIcon;  // default
+
+        if (user.user_type === "1") icon = redIcon;      // Admin
+        else if (user.user_type === "2") icon = greenIcon; // Hospital
+
+        const marker = L.marker([user.lat, user.lng], { icon: icon })
+                        .bindPopup(user.name);
+        markers.addLayer(marker);
+    });
+
+    map.addLayer(markers);
 </script>
 
 
