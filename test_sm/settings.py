@@ -41,9 +41,9 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 
 # DATABASE_URL = "postgresql://blood_bank_nfcc_user:QVXgqQfIJ4Ix3l6gHtRCmtvVS1fR7eS1@dpg-d216m795pdvs739p9mqg-a.virginia-postgres.render.com/blood_bank_nfcc"
 # # Move Database_url above databases
-# DATABASES = {
-#     "default": dj_database_url.parse(DATABASE_URL)
-# }
+DATABASES = {
+    "default": dj_database_url.parse(DATABASE_URL)
+}
 
 
 
