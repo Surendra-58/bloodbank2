@@ -1,3 +1,18 @@
 .env
 *.env
 .env.*
+venv/
+Lib
+Scripts
+
+#Django
+*.sqlite3
+*.log
+*.pot
+*.py[cod]
+db.sqlite3
+
+
+#CSRF, sessions, secrets
+*.secret
+*.session
