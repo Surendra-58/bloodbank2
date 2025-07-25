@@ -3,6 +3,11 @@ from pathlib import Path
 import os
 from decouple import config  # from python-decouple
 
+import dj_database_url
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -12,23 +17,34 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-nj-n#eu$tb8&p(fxs=%z^_&7jr1093hbat*39f4v-oo%5p7l2^'
+# SECRET_KEY = 'django-insecure-nj-n#eu$tb8&p(fxs=%z^_&7jr1093hbat*39f4v-oo%5p7l2^'
+
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-ALLOWED_HOSTS = ['*']
+# DEBUG = True
+# ALLOWED_HOSTS = ['*']
+
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
 LOGIN_URL = 'login'  # Replace 'login_page' with the name of your login view
 
 
+CLOUDINARY_STORAGE = { 
+    'CLOUD_NAME': os.environ['CLOUDINARY_CLOUD_NAME'],
+    'API_KEY': os.environ['CLOUDINARY_API_KEY'],
+    'API_SECRET': os.environ['CLOUDINARY_API_SECRET'],
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
+SECRET_KEY = os.environ.get("SECRET_KEY")
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
 
-# SECRET_KEY = os.environ.get("SECRET_KEY")
-# DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
-# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
-
-# DATABASE_URL = os.environ.get("DATABASE_URL")
+DATABASE_URL = os.environ.get("DATABASE_URL")
 # if not DATABASE_URL:
 #     raise Exception("DATABASE_URL is not set in environment variables!")
 
@@ -61,6 +77,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myapp',
     'blog',
+    'cloudinary',
+    'cloudinary_storage',
 
 ]
 
@@ -186,8 +204,11 @@ EMAIL_USE_SSL=True
 # EMAIL_HOST_USER="everestatcc@gmail.com"
 # EMAIL_HOST_PASSWORD=" "
 
-EMAIL_HOST_USER = config("EMAIL_HOST_USER")        # no default; must be set
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")# no default; must be set
+# EMAIL_HOST_USER = config("EMAIL_HOST_USER")        # no default; must be set
+# EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")# no default; must be set
+
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 
 
 from django.contrib.messages import constants as messages
