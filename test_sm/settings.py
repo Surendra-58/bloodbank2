@@ -13,16 +13,10 @@ import cloudinary.api
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-nj-n#eu$tb8&p(fxs=%z^_&7jr1093hbat*39f4v-oo%5p7l2^'
-
-
-# SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*']
 
 LOGIN_URL = 'login'  # Replace 'login_page' with the name of your login view
 
@@ -44,15 +38,13 @@ DATABASE_URL = os.environ.get("DATABASE_URL")
 # if not DATABASE_URL:
 #     raise Exception("DATABASE_URL is not set in environment variables!")
 
+
+# DATABASE_URL = "postgresql://blood_bank_nfcc_user:QVXgqQfIJ4Ix3l6gHtRCmtvVS1fR7eS1@dpg-d216m795pdvs739p9mqg-a.virginia-postgres.render.com/blood_bank_nfcc"
+# # Move Database_url above databases
 # DATABASES = {
 #     "default": dj_database_url.parse(DATABASE_URL)
 # }
 
-
-# DATABASE_URL = "postgresql://blood_bank_i1nt_user:uEzVQsakPixYKlAMmRNgNn5rNlozSTh3@dpg-d008buqli9vc739kukfg-a.virginia-postgres.render.com/blood_bank_i1nt"
-# DATABASES = {
-#     "default": dj_database_url.parse(DATABASE_URL)
-# }
 
 
 
@@ -122,16 +114,16 @@ WSGI_APPLICATION = 'test_sm.wsgi.application'
 
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'blood_bank',
-        'USER': 'root',
-        'PASSWORD': 'suresh',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'blood_bank',
+#         'USER': 'root',
+#         'PASSWORD': 'suresh',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
 
 
 # DATABASES = {
