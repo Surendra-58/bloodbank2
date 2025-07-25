@@ -73,6 +73,9 @@
                                 <strong>Address:</strong> {{ user.address }}
                             </li>
                             <li class="list-group-item">
+                                <strong>Location:</strong> {{ user.latitude }}, {{ user.longitude }}
+                            </li>
+                            <li class="list-group-item">
                                 <strong>Created At:</strong> {{ user.created_at }}
                             </li>
                             <li class="list-group-item">
@@ -98,6 +101,11 @@
                             <li class="list-group-item">
                                 <strong>Age:</strong> {{ user.age }}
                             </li>
+                            <li class="list-group-item">
+                                <strong>Location:</strong> {{ user.latitude }}, {{ user.longitude }}
+                            </li>
+
+
                             <li class="list-group-item">
                                 <strong>Identity:</strong>
                                 {% if user.identity %}
